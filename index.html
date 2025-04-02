@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .menu {
+            list-style: none;
+            padding-left: 20px;
+        }
+        .has-children {
+            cursor: pointer;
+            position: relative;
+        }
+        .has-children::before {
+            content: '▶';
+            position: absolute;
+            left: -15px;
+        }
+        .has-children.open::before {
+            content: '▼';
+        }
+        .hidden {
+            display: none;
+        }
+        .checked {
+            color: #888;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <ul class="menu">
+        <li>
+            <span>Книги</span>
+            <ul>
+                <li class="checked"><span>Отечественные</span></li>
+                <li>
+                    <span>Зарубежные</span>
+                    <ul class="hidden">
+                        <li><span>Детективы</span></li>
+                        <li><span>Научная фантастика</span></li>
+                        <li><span>Исторические</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span>DVD</span>
+            <ul class="hidden">
+                <li>
+                    <span>Отечественные</span>
+                    <ul class="hidden">
+                        <li><span>Детективы</span></li>
+                        <li><span>Научная фантастика</span></li>
+                        <li><span>Исторические</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="checked"><span>Зарубежные</span></li>
+    </ul>
+
+    <script>
+        document.querySelectorAll('li').forEach(li => {
+            const childrenUl = li.querySelector('ul');
+            const span = li.querySelector('span');
+            
+            
+            if (childrenUl) {
+                li.classList.add('has-children');
+                childrenUl.classList.add('hidden');
+            }
+            
+            if (li.classList.contains('checked')) {
+                span.style.cursor = 'not-allowed';
+            }
+
+            
+            li.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                if (li.classList.contains('checked')) return;
+                
+                if (childrenUl) {
+                    
+                    li.classList.toggle('open');
+                    childrenUl.classList.toggle('hidden');
+                } else {
+                    
+                    alert('Можно перейти по ссылке!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
